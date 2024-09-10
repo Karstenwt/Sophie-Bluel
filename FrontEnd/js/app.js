@@ -10,7 +10,6 @@ fetch("http://localhost:5678/api/works")
     console.error("Erreur lors de la récupération des travaux :", error);
   });
 function afficherGalerie(works) {
-  // Sélectionner l'élément galerie dans le DOM
   const galerieElement = document.querySelector(".gallery");
 
   // Vider le contenu existant de la galerie pour éviter les doublons
