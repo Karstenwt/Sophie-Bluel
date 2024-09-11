@@ -227,6 +227,12 @@ li:hover {
   text-align: center;
 }
 
+.boutonsFiltres:hover,
+.boutonTous:hover {
+  background-color: #1d6154;
+  color: #ffff;
+}
+
 .gallery {
   width: 100%;
   display: grid;
