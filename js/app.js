@@ -1,15 +1,13 @@
-// Récupération des travaux depuis l'API
-window.onload = function () {
-  fetch("http://localhost:5678/api/works")
-    .then((response) => response.json())
-    .then((works) => {
-      console.log(works);
-      afficherGalerie(works); // Appel d'une fonction pour afficher tous les travaux
-      genererMenuCategories(works); // Appel de la fonction pour générer les filtres par catégories
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la récupération des travaux :", error);
-    });
+window.onload = async function () {
+  try {
+    const response = await fetch("http://localhost:5678/api/works");
+    const works = await response.json();
+    console.log(works);
+    afficherGalerie(works); // Appel d'une fonction pour afficher tous les travaux
+    genererMenuCategories(works); // Appel de la fonction pour générer les filtres par catégories
+  } catch (error) {
+    console.error("Erreur lors de la récupération des travaux :", error);
+  }
 };
 
 // Fonction pour afficher les projets dans la galerie
