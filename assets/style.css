@@ -127,7 +127,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-/** end reset css**/
+/** end reset css **/
+
+/* Styles généraux */
 body {
   max-width: 1140px;
   margin: auto;
@@ -164,6 +166,8 @@ h2 {
   font-size: 30px;
   color: #1d6154;
 }
+
+/* Navigation */
 nav ul {
   display: flex;
   align-items: center;
@@ -173,6 +177,10 @@ nav ul {
 nav ul a {
   text-decoration: none;
   color: inherit;
+  font-family: "Syne", sans-serif; /* Assurer que la même police est utilisée */
+  font-weight: 700; /* Appliquer un poids de police en gras (700) */
+  font-size: 1.2em; /* Taille de police égale pour tous les boutons */
+  padding: 0 10px; /* Espacement autour du texte des boutons */
 }
 
 nav li {
@@ -181,8 +189,14 @@ nav li {
 }
 
 li:hover {
-  color: #b1663c;
+  color: #b1663c; /* Changement de couleur au survol */
 }
+
+.nav-button:hover {
+  color: #b1663c; /* Couleur au survol */
+}
+
+/* Section introduction */
 #introduction {
   display: flex;
   align-items: center;
@@ -206,10 +220,14 @@ li:hover {
 #introduction p {
   margin-bottom: 0.5em;
 }
+
+/* Section portfolio */
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
 }
+
+/* Menu catégories */
 .menu-categories {
   display: flex;
   justify-content: center;
@@ -217,6 +235,7 @@ li:hover {
   flex-wrap: wrap;
   margin-top: 20px;
 }
+
 .boutonsFiltres,
 .boutonTous {
   min-width: 100px;
@@ -239,6 +258,7 @@ li:hover {
   color: #ffff;
 }
 
+/* Galerie */
 .gallery {
   width: 100%;
   display: grid;
@@ -250,6 +270,8 @@ li:hover {
 .gallery img {
   width: 100%;
 }
+
+/* Section contact */
 #contact {
   width: 50%;
   margin: auto;
@@ -273,9 +295,11 @@ li:hover {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
   margin: 2em 0 1em 0;
 }
+
 #contact textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -292,12 +316,14 @@ input[type="submit"] {
   border-radius: 60px;
 }
 
+/* Footer */
 footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
 }
-/*login*/
+
+/* Login */
 .forgotPassword {
   text-align: center;
 }

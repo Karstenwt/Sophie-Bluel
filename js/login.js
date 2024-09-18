@@ -11,6 +11,10 @@ function updateLoginLogoutButton() {
   const authToken = localStorage.getItem("authToken");
   const loginLink = document.querySelector('nav a[href="login.html"]');
 
+  if (loginLink) {
+    loginLink.classList.add("nav-button");
+  }
+
   if (authToken && window.location.pathname.includes("index.html")) {
     // Si l'utilisateur est connecté, afficher "Logout"
     loginLink.innerText = "Logout";
