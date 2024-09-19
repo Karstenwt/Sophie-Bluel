@@ -6,6 +6,74 @@ const inputMail = document.getElementById("email");
 const inputPassword = document.getElementById("password");
 const loginForm = document.getElementById("loginform");
 
+// Fonction pour afficher ou masquer le lien "Modifier" en fonction du mode édition
+function afficherLienModifier() {
+  const lienModifier = document.querySelector(".link-modifier"); // Sélectionne l'élément
+
+  if (!lienModifier) {
+    console.warn("L'élément .link-modifier n'a pas été trouvé dans le DOM.");
+    return; // Si l'élément n'existe pas, on arrête l'exécution
+  }
+
+  const authToken = localStorage.getItem("authToken"); // Vérifie si l'utilisateur est connecté
+
+  if (authToken) {
+    lienModifier.style.display = "inline-flex"; // Affiche le lien en mode édition
+  } else {
+    lienModifier.style.display = "none"; // Masque le lien si l'utilisateur n'est pas connecté
+  }
+}
+
+// Appel de la fonction lors du chargement de la page
+window.addEventListener("load", function () {
+  afficherLienModifier(); // Vérifie et affiche le lien "Modifier" si l'utilisateur est en mode édition
+});
+
+// Gestion de l'envoi du formulaire sur la page de login
+if (loginForm) {
+  loginForm.addEventListener("submit", async function (e) {
+    e.preventDefault(); // Empêche le rechargement de la page
+
+    // Récupérer les valeurs du formulaire
+    const email = inputMail.value;
+    const password = inputPassword.value;
+
+    try {
+      // Envoyer la requête POST à l'API pour l'authentification
+      const response = await fetch(apiLoginUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }), // Envoi des informations du formulaire
+      });
+
+      // Vérifier si la réponse est correcte
+      if (response.ok) {
+        const data = await response.json();
+
+        // Stocker le token pour indiquer que l'utilisateur est en mode édition
+        localStorage.setItem("authToken", data.token);
+
+        // Rediriger vers la page d'accueil ou afficher la page en mode édition
+        window.location.href = "index.html"; // Redirection vers la page principale
+
+        // Afficher le lien "Modifier" une fois connecté
+        afficherLienModifier();
+      } else {
+        // En cas d'échec de l'authentification
+        alert("Erreur : Email ou mot de passe incorrect.");
+      }
+    } catch (error) {
+      // Log pour mieux comprendre l'erreur
+      console.error("Erreur lors de la tentative de connexion :", error);
+
+      // Afficher l'erreur à l'utilisateur
+      alert("Une erreur est survenue, veuillez réessayer plus tard.");
+    }
+  });
+}
+
 // Fonction pour afficher la barre noire de mode édition
 function afficherBlackBar() {
   const blackBar = document.createElement("div");
@@ -58,43 +126,3 @@ function updateLoginLogoutButton() {
 window.addEventListener("load", function () {
   updateLoginLogoutButton();
 });
-
-// Gestion de l'envoi du formulaire sur la page de login
-if (loginForm) {
-  loginForm.addEventListener("submit", async function (e) {
-    e.preventDefault(); // Empêche le rechargement de la page
-
-    // Récupérer les valeurs du formulaire
-    const email = inputMail.value;
-    const password = inputPassword.value;
-
-    try {
-      // Envoyer la requête POST à l'API
-      const response = await fetch(apiLoginUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }), // Envoi des informations du formulaire
-      });
-
-      // Vérifier si la réponse est correcte
-      if (response.ok) {
-        const data = await response.json();
-
-        // Stocker le token pour les futures requêtes
-        localStorage.setItem("authToken", data.token);
-
-        // Rediriger vers la page d'accueil après connexion
-        window.location.href = "index.html"; // Redirection vers la page principale
-      } else {
-        // Log en cas d'échec de l'authentification
-        alert("Erreur : Email ou mot de passe incorrect.");
-      }
-    } catch (error) {
-      // Log pour capturer des détails sur l'erreur
-      console.error("Erreur lors de la tentative de connexion :", error);
-      alert("Une erreur est survenue, veuillez réessayer plus tard.");
-    }
-  });
-}
