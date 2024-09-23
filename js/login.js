@@ -12,7 +12,7 @@ function afficherLienModifier() {
 
   if (!lienModifier) {
     console.warn("L'élément .link-modifier n'a pas été trouvé dans le DOM.");
-    return; // Si l'élément n'existe pas, on arrête l'exécution
+    return; // Si l'élément n'existe pas,  arrêt de l'exécution
   }
 
   const authToken = localStorage.getItem("authToken"); // Vérifie si l'utilisateur est connecté
@@ -51,6 +51,7 @@ if (loginForm) {
       // Vérifier si la réponse est correcte
       if (response.ok) {
         const data = await response.json();
+        console.log("token reçu : ", data.token);
 
         // Stocker le token pour indiquer que l'utilisateur est en mode édition
         localStorage.setItem("authToken", data.token);

@@ -70,7 +70,7 @@ document.onclick = (event) => {
   }
 };
 
-// Le bouton "Ajouter une photo" dans la modale 1 doit ouvrir la modale 2
+// Le bouton "Ajouter une photo" dans la modale 1 ouvre la modale 2
 function ajouterPhoto() {
   const boutonAjouterPhotoModale1 = document.getElementById("validation");
   boutonAjouterPhotoModale1.addEventListener("click", (e) => {
@@ -90,13 +90,12 @@ function affichageDesMiniature() {
     .then((response) => response.json())
     .then((projets) => {
       // Boucle pour chaque projet récupéré
-      for (let i = 0; i < projets.length; i++) {
-        const elements = projets[i];
-
+      projets.forEach((elements) => {
         if (elements !== null) {
           // Création des miniatures
           const ficheMiniature = document.createElement("div");
           ficheMiniature.classList.add("fiche-miniature");
+          ficheMiniature.setAttribute("id", `projet-${elements.id}`); // Assigner l'ID du projet à la miniature
 
           const icones = document.createElement("div");
           icones.classList.add("icones-fiche-miniature");
@@ -111,7 +110,7 @@ function affichageDesMiniature() {
           // Ajout du bouton de suppression
           const boutonSupprimer = document.createElement("button");
           boutonSupprimer.classList.add("bouton-delete");
-          boutonSupprimer.setAttribute("id", elements.id);
+          boutonSupprimer.setAttribute("id", elements.id); // Assigner l'ID de chaque projet
 
           // Ajout de l'icône trash can
           const iconeEffacer = document.createElement("i");
@@ -137,8 +136,46 @@ function affichageDesMiniature() {
           ficheMiniature.appendChild(editer);
           miniatures.appendChild(ficheMiniature); // Ajoute la miniature à la modale
         }
-      }
+      });
+
+      // Gestion du clic pour supprimer un projet
+      document.querySelectorAll(".bouton-delete").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const projetId = button.getAttribute("id"); // Récupérer l'ID du bouton de suppression
+          supprimerProjet(projetId);
+        });
+      });
     });
+}
+
+// Fonction pour supprimer un projet
+function supprimerProjet(projetId) {
+  const authToken = localStorage.getItem("authToken"); // Récupérer le token depuis localStorage
+
+  if (!authToken) {
+    alert("Vous devez être connecté pour supprimer un projet.");
+    return;
+  }
+
+  fetch(`http://localhost:5678/api/works/${projetId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${authToken}`, // Inclure le token dans l'en-tête
+    },
+  }).then((response) => {
+    if (response.ok) {
+      // Vérifie si l'élément existe avant de le supprimer
+      const projetElement = document.getElementById(`projet-${projetId}`);
+      if (projetElement) {
+        projetElement.remove(); // Supprime l'élément du DOM
+      } else {
+        console.error("Projet non trouvé dans le DOM : " + projetId);
+      }
+    } else {
+      alert("Erreur lors de la suppression du projet");
+    }
+  });
 }
 
 // Affiche les miniatures dans la modale 1
