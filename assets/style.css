@@ -439,6 +439,93 @@ li:hover {
   align-self: center;
   color: #d65353;
 }
+/** Modale2 **/
+
+.retour-fermer {
+  box-sizing: border-box;
+  width: 630px;
+  display: flex;
+  padding: 10px 30px 10px 30px;
+  justify-content: space-between;
+}
+.bouton-retour {
+  border: none;
+  background-color: #fffeff;
+}
+
+#section-ajout {
+  width: 100%;
+  min-width: 420px;
+  height: 100%;
+  min-height: 169px;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #e8f1f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+
+.fa-image::before {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+
+.inserer-photo p {
+  display: flex;
+  align-self: center;
+}
+
+#section-ajout input {
+  display: none;
+}
+
+#icone-image {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 58px;
+  height: 58px;
+  margin: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+
+  background-color: #cbd6dc;
+  color: #e8f1f6;
+  font-size: 60px;
+}
+
+#bouton-ajouter-photo {
+  height: 36px;
+  width: 173px;
+  padding-top: 15px;
+  border: none;
+  border-radius: 50px;
+  background: #cbd6dc;
+  font-family: Work Sans;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(48, 102, 133, 1);
+  text-align: center;
+}
+
+.formulaire-ajout {
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+#valider-modale2 {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  background-color: #a7a7a7;
+  height: 36px;
+  width: 237px;
+}
 /* Menu catégories */
 .menu-categories {
   display: flex;
