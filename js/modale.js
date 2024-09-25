@@ -63,12 +63,12 @@ function boutonFermerModale2() {
 }
 
 // Fermeture de la modale en cliquant en dehors (overlay)
-document.onclick = (event) => {
+overlay.addEventListener("click", (event) => {
   if (event.target === overlay) {
     fermerModale1();
     fermerModale2();
   }
-};
+});
 
 // Le bouton "Ajouter une photo" dans la modale 1 ouvre la modale 2
 function ajouterPhoto() {
@@ -172,17 +172,201 @@ function supprimerProjet(projetId) {
       } else {
         console.error("Projet non trouvé dans le DOM : " + projetId);
       }
+      // Mise à jour de la galerie principale
+      retirerProjetDeGalerie(projetId);
     } else {
       alert("Erreur lors de la suppression du projet");
     }
   });
 }
 
-// Affiche les miniatures dans la modale 1
-affichageDesMiniature();
+// Fonction pour retirer le projet de la galerie principale
+function retirerProjetDeGalerie(projetId) {
+  const figure = document.querySelector(`figure[data-id='${projetId}']`);
+  if (figure) {
+    figure.remove();
+  }
+}
 
-// Activation du clic pour ouvrir et fermer les modales
+// Fonction pour vérifier le formulaire d'ajout de projet
+function verifierFormulaireAjout() {
+  const inputImage = document.getElementById("selectionner");
+  const inputTitre = document.getElementById("titre");
+  const inputCategorie = document.getElementById("liste-categories");
+
+  if (!inputImage.files[0] || !inputTitre.value || !inputCategorie.value) {
+    alert("Veuillez remplir tous les champs et sélectionner une image.");
+    return false;
+  }
+  return true;
+}
+
+// Fonction pour envoyer le nouveau projet au backend
+async function envoyerNouveauProjet() {
+  if (!verifierFormulaireAjout()) return;
+
+  const formData = new FormData();
+  formData.append("image", document.getElementById("selectionner").files[0]);
+  formData.append("title", document.getElementById("titre").value);
+  formData.append(
+    "category",
+    document.getElementById("liste-categories").value
+  );
+
+  try {
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de l'envoi du projet");
+    }
+
+    const nouveauProjet = await response.json();
+    console.log("Projet ajouté avec succès : ", nouveauProjet);
+
+    // Mise à jour dynamique de la galerie et de la modale
+    ajouterProjetDOM(nouveauProjet);
+
+    // Réinitialiser le formulaire
+    document.querySelector(".formulaire-ajout").reset();
+    // Réinitialiser la prévisualisation
+    resetPrevisualisation();
+
+    // Fermer la modale d'ajout
+    fermerModale2();
+  } catch (error) {
+    console.error("Erreur :", error);
+    alert("Une erreur est survenue lors de l'ajout du projet.");
+  }
+}
+
+// Fonction pour ajouter le projet au DOM (galerie et modale)
+function ajouterProjetDOM(projet) {
+  // Ajout dans la galerie principale
+  const galerieElement = document.querySelector(".gallery");
+  const figure = document.createElement("figure");
+  figure.setAttribute("data-id", projet.id);
+
+  const img = document.createElement("img");
+  img.src = projet.imageUrl;
+  img.alt = projet.title;
+
+  const figcaption = document.createElement("figcaption");
+  figcaption.innerText = projet.title;
+
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
+  galerieElement.appendChild(figure);
+
+  // Ajout dans la modale (miniature)
+  const miniatures = document.getElementById("affichage-miniature");
+  const ficheMiniature = document.createElement("div");
+  ficheMiniature.classList.add("fiche-miniature");
+  ficheMiniature.setAttribute("id", `projet-${projet.id}`);
+
+  const icones = document.createElement("div");
+  icones.classList.add("icones-fiche-miniature");
+
+  // Bouton déplacer (optionnel)
+  const boutonDeplacer = document.createElement("button");
+  boutonDeplacer.setAttribute("id", "bouton-deplacer");
+  const iconeDeplacer = document.createElement("i");
+  iconeDeplacer.classList = "fa-solid fa-arrows-up-down-left-right";
+  iconeDeplacer.setAttribute("id", "icone-deplacer");
+
+  // Bouton supprimer
+  const boutonSupprimer = document.createElement("button");
+  boutonSupprimer.classList.add("bouton-delete");
+  boutonSupprimer.setAttribute("id", projet.id);
+
+  const iconeEffacer = document.createElement("i");
+  iconeEffacer.classList = "fa-solid fa-trash-can";
+
+  // Image miniature
+  const image = document.createElement("img");
+  image.src = projet.imageUrl;
+  image.classList.add("image-miniature");
+
+  // Option éditer
+  const editer = document.createElement("a");
+  editer.innerText = "éditer";
+  editer.classList.add("editer");
+
+  // Ajout des éléments
+  icones.appendChild(boutonDeplacer);
+  boutonDeplacer.appendChild(iconeDeplacer);
+  icones.appendChild(boutonSupprimer);
+  boutonSupprimer.appendChild(iconeEffacer);
+  ficheMiniature.appendChild(icones);
+  ficheMiniature.appendChild(image);
+  ficheMiniature.appendChild(editer);
+  miniatures.appendChild(ficheMiniature);
+
+  // Ajouter l'événement de suppression sur le nouveau bouton
+  boutonSupprimer.addEventListener("click", (e) => {
+    e.preventDefault();
+    supprimerProjet(projet.id);
+  });
+}
+
+// Fonction pour prévisualiser l'image sélectionnée
+function previsualiserImage() {
+  const inputImage = document.getElementById("selectionner");
+  const zonePrevisu = document.getElementById("section-ajout");
+  const iconeImage = document.getElementById("icone-image");
+  const boutonAjouterPhoto = document.getElementById("bouton-ajouter-photo");
+  const texteFormats = document.getElementById("texte-formats");
+
+  inputImage.addEventListener("change", () => {
+    const fichier = inputImage.files[0];
+    if (fichier) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        zonePrevisu.style.backgroundImage = `url(${e.target.result})`;
+        zonePrevisu.style.backgroundSize = "cover";
+        zonePrevisu.style.backgroundPosition = "center";
+        // Masquer les éléments
+        iconeImage.style.display = "none";
+        boutonAjouterPhoto.style.display = "none";
+        texteFormats.style.display = "none";
+      };
+      reader.readAsDataURL(fichier);
+    }
+  });
+}
+
+// Fonction pour réinitialiser la prévisualisation
+function resetPrevisualisation() {
+  const zonePrevisu = document.getElementById("section-ajout");
+  const iconeImage = document.getElementById("icone-image");
+  const boutonAjouterPhoto = document.getElementById("bouton-ajouter-photo");
+  const texteFormats = document.getElementById("texte-formats");
+
+  zonePrevisu.style.backgroundImage = "none";
+  iconeImage.style.display = "block";
+  boutonAjouterPhoto.style.display = "block";
+  texteFormats.style.display = "block";
+}
+
+// Événement sur le bouton "Valider" du formulaire d'ajout
+function activerEnvoiFormulaire() {
+  const formulaireAjout = document.querySelector(".formulaire-ajout");
+  formulaireAjout.addEventListener("submit", (e) => {
+    e.preventDefault();
+    envoyerNouveauProjet();
+  });
+}
+
+// Appels des fonctions
+affichageDesMiniature();
 modificationProjets();
 boutonFermerModale1();
 boutonFermerModale2();
-ajouterPhoto(); // Activation du bouton "Ajouter une photo"
+ajouterPhoto();
+activerEnvoiFormulaire();
+previsualiserImage();

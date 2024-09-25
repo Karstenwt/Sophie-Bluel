@@ -8,26 +8,77 @@ const loginForm = document.getElementById("loginform");
 
 // Fonction pour afficher ou masquer le lien "Modifier" en fonction du mode édition
 function afficherLienModifier() {
-  const lienModifier = document.querySelector(".link-modifier"); // Sélectionne l'élément
+  const lienModifier = document.querySelector(".link-modifier");
 
   if (!lienModifier) {
     console.warn("L'élément .link-modifier n'a pas été trouvé dans le DOM.");
-    return; // Si l'élément n'existe pas,  arrêt de l'exécution
+    return; // Si l'élément n'existe pas, arrêter l'exécution
   }
 
-  const authToken = localStorage.getItem("authToken"); // Vérifie si l'utilisateur est connecté
+  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
 
   if (authToken) {
-    lienModifier.style.display = "inline-flex"; // Affiche le lien en mode édition
+    lienModifier.style.display = "inline-flex"; // Affiche le lien si l'utilisateur est connecté
   } else {
     lienModifier.style.display = "none"; // Masque le lien si l'utilisateur n'est pas connecté
   }
 }
 
-// Appel de la fonction lors du chargement de la page
-window.addEventListener("load", function () {
-  afficherLienModifier(); // Vérifie et affiche le lien "Modifier" si l'utilisateur est en mode édition
-});
+// Fonction pour afficher la barre noire de mode édition uniquement si l'utilisateur est connecté
+function afficherBlackBar() {
+  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
+
+  if (authToken) {
+    // Si l'utilisateur est connecté, afficher la barre noire
+    const blackBar = document.createElement("div");
+    blackBar.classList.add("black-bar");
+
+    // Créer l'icône
+    const icon = document.createElement("i");
+    icon.classList.add("fa-solid", "fa-pen-to-square");
+    icon.style.marginRight = "10px"; // Ajouter un espacement entre l'icône et le texte
+
+    // Ajouter l'icône et le texte à la barre
+    blackBar.appendChild(icon);
+    blackBar.appendChild(document.createTextNode("Mode édition"));
+
+    // Ajouter la barre noire en haut du body
+    document.body.prepend(blackBar);
+  }
+}
+
+// Fonction pour mettre à jour le bouton "Login" ou "Logout" en fonction de l'état de connexion
+function updateLoginLogoutButton() {
+  const authToken = localStorage.getItem("authToken");
+  const loginLink = document.querySelector('nav a[href="login.html"]');
+
+  // Appliquer la classe appropriée pour le style des boutons
+  if (loginLink) {
+    loginLink.classList.add("nav-button");
+  }
+
+  if (authToken) {
+    // Si l'utilisateur est connecté, afficher "Logout"
+    loginLink.innerText = "Logout";
+
+    // Afficher la black bar de mode édition et le lien "Modifier"
+    afficherBlackBar();
+    afficherLienModifier();
+
+    // Gestion de la déconnexion
+    loginLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Supprimer le token du localStorage pour déconnecter l'utilisateur
+      localStorage.removeItem("authToken");
+      // Rediriger vers la page de login après déconnexion
+      window.location.href = "index.html";
+    });
+  } else {
+    // Si l'utilisateur n'est pas connecté, afficher "Login"
+    loginLink.innerText = "Login";
+    afficherLienModifier(); // Masquer le lien "Modifier"
+  }
+}
 
 // Gestion de l'envoi du formulaire sur la page de login
 if (loginForm) {
@@ -73,54 +124,6 @@ if (loginForm) {
       alert("Une erreur est survenue, veuillez réessayer plus tard.");
     }
   });
-}
-
-// Fonction pour afficher la barre noire de mode édition
-function afficherBlackBar() {
-  const blackBar = document.createElement("div");
-  blackBar.classList.add("black-bar");
-
-  // Créer l'icône
-  const icon = document.createElement("i");
-  icon.classList.add("fa-solid", "fa-pen-to-square");
-  icon.style.marginRight = "10px"; // Ajouter un espacement entre l'icône et le texte
-
-  // Ajouter l'icône et le texte à la barre
-  blackBar.appendChild(icon);
-  blackBar.appendChild(document.createTextNode("Mode édition"));
-
-  // Ajouter la barre noire en haut du body
-  document.body.prepend(blackBar);
-}
-
-// Fonction pour mettre à jour le bouton "Login" ou "Logout" en fonction de l'état de connexion
-function updateLoginLogoutButton() {
-  const authToken = localStorage.getItem("authToken");
-  const loginLink = document.querySelector('nav a[href="login.html"]');
-
-  // Appliquer la classe appropriée pour le style des boutons
-  if (loginLink) {
-    loginLink.classList.add("nav-button");
-  }
-
-  if (authToken && window.location.pathname.includes("index.html")) {
-    // Si l'utilisateur est connecté, afficher "Logout"
-    loginLink.innerText = "Logout";
-
-    // Afficher la black bar de mode édition
-    afficherBlackBar();
-
-    loginLink.addEventListener("click", function (e) {
-      e.preventDefault();
-      // Supprimer le token du localStorage pour déconnecter l'utilisateur
-      localStorage.removeItem("authToken");
-      // Rediriger vers la page de login après déconnexion
-      window.location.href = "index.html";
-    });
-  } else {
-    // Si l'utilisateur n'est pas connecté, afficher "Login"
-    loginLink.innerText = "Login";
-  }
 }
 
 // Appel de la fonction de mise à jour au chargement de la page principale
