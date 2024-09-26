@@ -6,17 +6,17 @@ const modale2 = document.getElementById("modale2");
 // Fonction pour afficher la modale 1 (Galerie photo)
 function ouvrirModale1() {
   modale1.style.display = "block";
-  modale1.removeAttribute("aria-hidden"); // rend la modale visible
+  modale1.removeAttribute("aria-hidden");
   modale1.setAttribute("aria-modal", "true");
-  overlay.style.display = "block"; // Affiche l'overlay
+  overlay.style.display = "block";
 }
 
 // Fonction pour fermer la modale 1
 function fermerModale1() {
   modale1.style.display = "none";
-  modale1.removeAttribute("aria-modal"); // pour indiquer que la modale est cachée
+  modale1.removeAttribute("aria-modal");
   modale1.setAttribute("aria-hidden", "true");
-  overlay.style.display = "none"; // Masque l'overlay si aucune autre modale n'est ouverte
+  overlay.style.display = "none";
 }
 
 // Fonction pour afficher la modale 2 (Ajout de photo)
@@ -24,7 +24,7 @@ function ouvrirModale2() {
   modale2.style.display = "block";
   modale2.removeAttribute("aria-hidden");
   modale2.setAttribute("aria-modal", "true");
-  overlay.style.display = "block"; // Affiche l'overlay (réaffiché ici au cas où il serait caché)
+  overlay.style.display = "block";
 }
 
 // Fonction pour fermer la modale 2
@@ -32,8 +32,9 @@ function fermerModale2() {
   modale2.style.display = "none";
   modale2.removeAttribute("aria-modal");
   modale2.setAttribute("aria-hidden", "true");
-  overlay.style.display = "none"; // Masque l'overlay
+  overlay.style.display = "none";
 }
+
 // Gestion du bouton "Retour" dans la modale 2
 const boutonRetour = document.getElementById("retour");
 boutonRetour.addEventListener("click", (e) => {
@@ -55,7 +56,7 @@ function modificationProjets() {
 function boutonFermerModale1() {
   const boutonFermer = document.getElementById("fermer-modale1");
   boutonFermer.addEventListener("click", (e) => {
-    e.preventDefault(); // Empêche l'action par défaut
+    e.preventDefault();
     fermerModale1();
   });
 }
@@ -90,50 +91,41 @@ function ajouterPhoto() {
 // Fonction pour afficher les miniatures dans la modale 1
 function affichageDesMiniature() {
   const miniatures = document.getElementById("affichage-miniature");
-  miniatures.innerHTML = ""; // Réinitialise le contenu avant d'ajouter de nouvelles miniatures
+  miniatures.innerHTML = "";
 
-  // Récupération des éléments depuis l'API
   fetch("http://localhost:5678/api/works")
     .then((response) => response.json())
     .then((projets) => {
-      // Boucle pour chaque projet récupéré
       projets.forEach((elements) => {
         if (elements !== null) {
-          // Création des miniatures
           const ficheMiniature = document.createElement("div");
           ficheMiniature.classList.add("fiche-miniature");
-          ficheMiniature.setAttribute("id", `projet-${elements.id}`); // Assigner l'ID du projet à la miniature
+          ficheMiniature.setAttribute("id", `projet-${elements.id}`);
 
           const icones = document.createElement("div");
           icones.classList.add("icones-fiche-miniature");
 
-          // Ajout des icônes de déplacement
           const boutonDeplacer = document.createElement("button");
           boutonDeplacer.setAttribute("id", "bouton-deplacer");
           const iconeDeplacer = document.createElement("i");
           iconeDeplacer.classList = "fa-solid fa-arrows-up-down-left-right";
           iconeDeplacer.setAttribute("id", "icone-deplacer");
 
-          // Ajout du bouton de suppression
           const boutonSupprimer = document.createElement("button");
           boutonSupprimer.classList.add("bouton-delete");
-          boutonSupprimer.setAttribute("id", elements.id); // Assigner l'ID de chaque projet
+          boutonSupprimer.setAttribute("id", elements.id);
 
-          // Ajout de l'icône trash can
           const iconeEffacer = document.createElement("i");
           iconeEffacer.classList = "fa-solid fa-trash-can";
 
-          // Création et ajout de l'image miniature
           const image = document.createElement("img");
           image.src = elements.imageUrl;
           image.classList.add("image-miniature");
 
-          // Ajout de l'option éditer
           const editer = document.createElement("a");
           editer.innerText = "éditer";
           editer.classList.add("editer");
 
-          // Ajout des éléments dans le DOM
           icones.appendChild(boutonDeplacer);
           boutonDeplacer.appendChild(iconeDeplacer);
           icones.appendChild(boutonSupprimer);
@@ -141,15 +133,14 @@ function affichageDesMiniature() {
           ficheMiniature.appendChild(icones);
           ficheMiniature.appendChild(image);
           ficheMiniature.appendChild(editer);
-          miniatures.appendChild(ficheMiniature); // Ajoute la miniature à la modale
+          miniatures.appendChild(ficheMiniature);
         }
       });
 
-      // Gestion du clic pour supprimer un projet
       document.querySelectorAll(".bouton-delete").forEach((button) => {
         button.addEventListener("click", (e) => {
           e.preventDefault();
-          const projetId = button.getAttribute("id"); // Récupérer l'ID du bouton de suppression
+          const projetId = button.getAttribute("id");
           supprimerProjet(projetId);
         });
       });
@@ -158,7 +149,7 @@ function affichageDesMiniature() {
 
 // Fonction pour supprimer un projet
 function supprimerProjet(projetId) {
-  const authToken = localStorage.getItem("authToken"); // Récupérer le token depuis localStorage
+  const authToken = localStorage.getItem("authToken");
 
   if (!authToken) {
     alert("Vous devez être connecté pour supprimer un projet.");
@@ -168,18 +159,16 @@ function supprimerProjet(projetId) {
   fetch(`http://localhost:5678/api/works/${projetId}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${authToken}`, // Inclure le token dans l'en-tête
+      Authorization: `Bearer ${authToken}`,
     },
   }).then((response) => {
     if (response.ok) {
-      // Vérifie si l'élément existe avant de le supprimer
       const projetElement = document.getElementById(`projet-${projetId}`);
       if (projetElement) {
-        projetElement.remove(); // Supprime l'élément du DOM
+        projetElement.remove();
       } else {
         console.error("Projet non trouvé dans le DOM : " + projetId);
       }
-      // Mise à jour de la galerie principale
       retirerProjetDeGalerie(projetId);
     } else {
       alert("Erreur lors de la suppression du projet");
@@ -236,15 +225,10 @@ async function envoyerNouveauProjet() {
     const nouveauProjet = await response.json();
     console.log("Projet ajouté avec succès : ", nouveauProjet);
 
-    // Mise à jour dynamique de la galerie et de la modale
     ajouterProjetDOM(nouveauProjet);
 
-    // Réinitialiser le formulaire
     document.querySelector(".formulaire-ajout").reset();
-    // Réinitialiser la prévisualisation
     resetPrevisualisation();
-
-    // Fermer la modale d'ajout
     fermerModale2();
   } catch (error) {
     console.error("Erreur :", error);
@@ -252,9 +236,8 @@ async function envoyerNouveauProjet() {
   }
 }
 
-// Fonction pour ajouter le projet au DOM (galerie et modale)
+// Fonction pour ajouter le projet au DOM
 function ajouterProjetDOM(projet) {
-  // Ajout dans la galerie principale
   const galerieElement = document.querySelector(".gallery");
   const figure = document.createElement("figure");
   figure.setAttribute("data-id", projet.id);
@@ -270,7 +253,6 @@ function ajouterProjetDOM(projet) {
   figure.appendChild(figcaption);
   galerieElement.appendChild(figure);
 
-  // Ajout dans la modale (miniature)
   const miniatures = document.getElementById("affichage-miniature");
   const ficheMiniature = document.createElement("div");
   ficheMiniature.classList.add("fiche-miniature");
@@ -279,14 +261,12 @@ function ajouterProjetDOM(projet) {
   const icones = document.createElement("div");
   icones.classList.add("icones-fiche-miniature");
 
-  // Bouton déplacer (optionnel)
   const boutonDeplacer = document.createElement("button");
   boutonDeplacer.setAttribute("id", "bouton-deplacer");
   const iconeDeplacer = document.createElement("i");
   iconeDeplacer.classList = "fa-solid fa-arrows-up-down-left-right";
   iconeDeplacer.setAttribute("id", "icone-deplacer");
 
-  // Bouton supprimer
   const boutonSupprimer = document.createElement("button");
   boutonSupprimer.classList.add("bouton-delete");
   boutonSupprimer.setAttribute("id", projet.id);
@@ -294,17 +274,14 @@ function ajouterProjetDOM(projet) {
   const iconeEffacer = document.createElement("i");
   iconeEffacer.classList = "fa-solid fa-trash-can";
 
-  // Image miniature
   const image = document.createElement("img");
   image.src = projet.imageUrl;
   image.classList.add("image-miniature");
 
-  // Option éditer
   const editer = document.createElement("a");
   editer.innerText = "éditer";
   editer.classList.add("editer");
 
-  // Ajout des éléments
   icones.appendChild(boutonDeplacer);
   boutonDeplacer.appendChild(iconeDeplacer);
   icones.appendChild(boutonSupprimer);
@@ -314,66 +291,13 @@ function ajouterProjetDOM(projet) {
   ficheMiniature.appendChild(editer);
   miniatures.appendChild(ficheMiniature);
 
-  // Ajouter l'événement de suppression sur le nouveau bouton
   boutonSupprimer.addEventListener("click", (e) => {
     e.preventDefault();
     supprimerProjet(projet.id);
   });
 }
 
-// Fonction pour prévisualiser l'image sélectionnée
-function previsualiserImage() {
-  const inputImage = document.getElementById("selectionner");
-  const zonePrevisu = document.getElementById("section-ajout");
-  const iconeImage = document.getElementById("icone-image");
-  const boutonAjouterPhoto = document.getElementById("bouton-ajouter-photo");
-  const texteFormats = document.getElementById("texte-formats");
-
-  inputImage.addEventListener("change", () => {
-    const fichier = inputImage.files[0];
-    if (fichier) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        zonePrevisu.style.backgroundImage = `url(${e.target.result})`;
-        zonePrevisu.style.backgroundSize = "cover";
-        zonePrevisu.style.backgroundPosition = "center";
-        // Masquer les éléments
-        iconeImage.style.display = "none";
-        boutonAjouterPhoto.style.display = "none";
-        texteFormats.style.display = "none";
-      };
-      reader.readAsDataURL(fichier);
-    }
-  });
-}
-
-// Fonction pour réinitialiser la prévisualisation
-function resetPrevisualisation() {
-  const zonePrevisu = document.getElementById("section-ajout");
-  const iconeImage = document.getElementById("icone-image");
-  const boutonAjouterPhoto = document.getElementById("bouton-ajouter-photo");
-  const texteFormats = document.getElementById("texte-formats");
-
-  zonePrevisu.style.backgroundImage = "none";
-  iconeImage.style.display = "block";
-  boutonAjouterPhoto.style.display = "block";
-  texteFormats.style.display = "block";
-}
-
-// Événement sur le bouton "Valider" du formulaire d'ajout
-function activerEnvoiFormulaire() {
-  const formulaireAjout = document.querySelector(".formulaire-ajout");
-  formulaireAjout.addEventListener("submit", (e) => {
-    e.preventDefault();
-    envoyerNouveauProjet();
-  });
-}
-
-// Appels des fonctions
+// Appel des fonctions pour gérer l'ajout de projet
 affichageDesMiniature();
 modificationProjets();
-boutonFermerModale1();
-boutonFermerModale2();
 ajouterPhoto();
-activerEnvoiFormulaire();
-previsualiserImage();
