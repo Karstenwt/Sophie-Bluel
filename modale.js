@@ -34,6 +34,13 @@ function fermerModale2() {
   modale2.setAttribute("aria-hidden", "true");
   overlay.style.display = "none"; // Masque l'overlay
 }
+// Gestion du bouton "Retour" dans la modale 2
+const boutonRetour = document.getElementById("retour");
+boutonRetour.addEventListener("click", (e) => {
+  e.preventDefault();
+  fermerModale2();
+  ouvrirModale1();
+});
 
 // Gestion de l'ouverture de la modale au clic sur "Modifier"
 function modificationProjets() {
