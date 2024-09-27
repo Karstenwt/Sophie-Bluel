@@ -36,7 +36,6 @@
     <div class="modales"></div>
 
     <!--modale 1 galerie photo-->
-
     <div
       class="modale"
       id="modale1"
@@ -64,7 +63,6 @@
     </div>
 
     <!--modale2 ajout photo-->
-
     <div
       id="modale2"
       class="modale"
@@ -89,22 +87,23 @@
           enctype="multipart/form-data"
         >
           <div id="section-ajout">
-            <!--prévisulaisation de l'image en importation-->
+            <!--prévisualisation de l'image en importation-->
             <div id="image-prev"></div>
             <i class="fa-solid fa-image" id="icone-image"></i>
 
             <!--importation des photos-->
-            <label for="selectionner" id="bouton-ajouter-photo">
-              +Ajouter photo</label
+            <label for="selectionner" id="bouton-ajouter-photo"
+              >+ Ajouter photo</label
             >
             <input
               type="file"
               id="selectionner"
-              accept="image/jpeg image/png"
+              accept="image/jpeg, image/png"
+              style="display: none"
               required
             />
 
-            <p>jpg,png: 4mo max</p>
+            <p>jpg, png: 4mo max</p>
           </div>
           <div class="label-champs">
             <label for="titre" class="label-formulaire">titre</label>
@@ -124,7 +123,6 @@
               name="categorie"
               id="liste-categories"
               class="champs-formulaire"
-              type="text"
               required
             >
               <option value="Champs-selection"></option>
@@ -159,13 +157,7 @@
           <p>
             Chaque projet sera étudié en commun, de façon à mettre en valeur les
             volumes, les matières et les couleurs dans le respect de l’esprit
-            des lieux et le choix adapté des matériaux. Le suivi du chantier
-            sera assuré dans le souci du détail, le respect du planning et du
-            budget.
-          </p>
-          <p>
-            En cas de besoin, une équipe pluridisciplinaire peut-être constituée
-            : architecte DPLG, décorateur(trice)
+            des lieux et le choix adapté des matériaux.
           </p>
         </article>
       </section>
@@ -203,6 +195,7 @@
         </ul>
       </nav>
     </footer>
+
     <script src="./app.js"></script>
     <script src="./filter.js"></script>
     <script src="./login.js"></script>

@@ -102,41 +102,37 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
+  font-family: "Work Sans", sans-serif;
+  font-size: 14px;
+  max-width: 1140px;
+  margin: auto;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
-  content: none;
-}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
 /* Styles généraux */
-body {
-  max-width: 1140px;
-  margin: auto;
-  font-family: "Work Sans";
-  font-size: 14px;
-}
 header {
   display: flex;
   justify-content: space-between;
   margin: 50px 0;
 }
+
 section {
   margin: 50px 0;
 }
@@ -144,20 +140,20 @@ section {
 h1 {
   display: flex;
   flex-direction: column;
-  font-family: "Syne";
+  font-family: "Syne", sans-serif;
   font-size: 22px;
   font-weight: 800;
   color: #b1663c;
 }
 
 h1 > span {
-  font-family: "Work Sans";
+  font-family: "Work Sans", sans-serif;
   font-size: 10px;
   letter-spacing: 0.1em;
 }
 
 h2 {
-  font-family: "Syne";
+  font-family: "Syne", sans-serif;
   font-weight: 700;
   font-size: 30px;
   color: #1d6154;
@@ -167,7 +163,6 @@ h2 {
 nav ul {
   display: flex;
   align-items: center;
-  list-style-type: none;
 }
 
 nav ul a {
@@ -180,11 +175,11 @@ nav li {
   font-size: 1.2em;
 }
 
-li:hover {
+nav li:hover {
   color: #b1663c;
 }
 
-/* Spécifiquement pour le bouton Login/Logout */
+/* Bouton Login/Logout */
 .nav-button {
   text-decoration: none;
   color: inherit;
@@ -199,9 +194,11 @@ li:hover {
   display: flex;
   align-items: center;
 }
+
 #introduction figure {
   flex: 1;
 }
+
 #introduction img {
   display: block;
   margin: auto;
@@ -211,6 +208,7 @@ li:hover {
 #introduction article {
   flex: 1;
 }
+
 #introduction h2 {
   margin-bottom: 1em;
 }
@@ -225,13 +223,11 @@ li:hover {
   margin-bottom: 50px;
 }
 
-/* Centrer le conteneur du titre */
 .portfolio-header {
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Pour le titre et le lien Modifier */
 .portfolio-header h2 {
   display: inline-block;
   position: relative;
@@ -240,7 +236,6 @@ li:hover {
   color: #1d6154;
 }
 
-/* Positionnement du lien Modifier */
 .link-modifier {
   text-decoration: none;
   color: black;
@@ -249,7 +244,6 @@ li:hover {
   position: absolute;
   right: -120px;
   top: 40%;
-
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -266,99 +260,81 @@ li:hover {
 .link-modifier:hover {
   color: #b1663c;
 }
-/** Modales**/
 
-/** Overlay**/
+/* Modales */
+
+/* Overlay */
 .modales {
   width: 100%;
   height: 100%;
-  background-color: #00000030;
+  background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
   left: 0;
   top: 0;
   display: none;
+  z-index: 999;
 }
 
+/* Styles communs pour toutes les modales */
 .modale {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, +10%);
-  padding: 0px;
-  margin: 0;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-/** Modale 1 Gallerie photo **/
-.contenu-modale {
   width: 630px;
-  margin: 0;
+  height: 688px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 0px;
+  border-radius: 10px 0px 0px 0px;
+  background-color: #ffffff;
+  opacity: 1;
+  z-index: 1000;
+  overflow: auto;
+  display: none;
+}
+
+/* Contenu de la modale */
+.contenu-modale {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  border-radius: 10px 0px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #fffeff;
-  box-sizing: border-box;
-  overflow: auto;
-  border-radius: 10px;
 }
 
-.bouton-fermer {
-  margin: 0;
-  padding: 0;
+/* Fermeture de la modale */
+.bouton-fermer,
+.bouton-retour {
   border: none;
-  background-color: #fffeff;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.fermeture-modale,
+.retour-fermer {
+  width: 100%;
   display: flex;
-  justify-self: right;
+  justify-content: space-between;
+  padding: 20px 30px;
+  box-sizing: border-box;
 }
 
 .modale h2 {
-  font-family: "Work Sans";
+  font-family: "Work Sans", sans-serif;
   color: #000000;
   font-weight: 400;
   font-size: 26px;
   text-align: center;
 }
 
-.modale .bouton-validation {
-  display: flex;
-  justify-content: center;
-  justify-self: right;
-  align-items: center;
-}
-
-.modale form {
-  margin: 30px;
-}
-
-.modale .champs-formulaire {
-  width: 440px;
-}
-
-.modale .label-formulaire {
-  font-family: Work Sans;
-  font-size: 14px;
-  font-weight: 500;
-}
-.fermeture-modale {
-  display: flex;
-  justify-content: right;
-  width: 630px;
-  box-sizing: border-box;
-  padding: 20px 30px 20px 30px;
-}
-
+/* Modale 1 : Galerie photo */
 .affichage-miniature {
-  margin-left: 40px;
-  margin-right: 40px;
+  margin: 40px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: justify;
   gap: 10px;
-  padding: 0px;
-  margin: 40px;
   padding-bottom: 50px;
   border-bottom: solid 1px #b3b3b3;
 }
@@ -366,60 +342,42 @@ li:hover {
 .fiche-miniature {
   display: flex;
   flex-direction: column;
-  width: 78.13;
+  width: 78.13px;
   box-sizing: border-box;
   padding: 10px;
+  position: relative;
 }
 
 .icones-fiche-miniature {
   display: flex;
-  justify-content: right;
   gap: 2px;
   position: absolute;
-  align-self: flex-end;
+  top: 5px;
+  right: 5px;
 }
 
-.bouton-delete {
+.bouton-delete,
+#bouton-deplacer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 17px;
   height: 17px;
   padding: 0;
-  color: #ffffff;
-  background-color: #000000;
-  border: none;
-}
-
-#icone-poubelle {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#bouton-deplacer {
-  justify-content: center;
-  width: 21px;
-  padding: 0;
-  color: transparent;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
-#bouton-deplacer :hover {
-  color: #000000;
+.bouton-delete i {
+  color: #ffffff;
+  background-color: #000000;
+  padding: 5px;
+  border-radius: 50%;
 }
 
-#icone-deplacer {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#bouton-deplacer i {
   color: transparent;
-  background-color: tr;
 }
 
 .modale img {
@@ -427,105 +385,106 @@ li:hover {
   height: 104.08px;
 }
 
-.ajouter-supprimer {
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  margin: 50px;
+.editer {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #000;
 }
 
-#supprimer {
-  display: flex;
-  align-self: center;
-  color: #d65353;
-}
-/** Modale2 **/
-
-.retour-fermer {
-  box-sizing: border-box;
-  width: 630px;
-  display: flex;
-  padding: 10px 30px 10px 30px;
-  justify-content: space-between;
-}
-.bouton-retour {
-  border: none;
-  background-color: #fffeff;
-}
-
+/* Modale 2 : Ajout photo */
 #section-ajout {
   width: 100%;
   min-width: 420px;
-  height: 100%;
-  min-height: 169px;
   padding: 10px;
   border-radius: 3px;
   background-color: #e8f1f6;
   display: flex;
   flex-direction: column;
-  justify-content: end;
   align-items: center;
 }
 
-.fa-image::before {
+#image-prev {
+  width: 100%;
+  height: 169px;
+  background-color: #e8f1f6;
   display: flex;
-  justify-self: center;
-  align-self: center;
-}
-
-.inserer-photo p {
-  display: flex;
-  align-self: center;
-}
-
-#section-ajout input {
-  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  background-size: cover;
+  background-position: center;
 }
 
 #icone-image {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  width: 58px;
-  height: 58px;
-  margin: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
-
-  background-color: #cbd6dc;
-  color: #e8f1f6;
   font-size: 60px;
+  color: #cbd6dc;
+  margin-bottom: 10px;
 }
 
+/* Bouton "Ajouter une photo" */
 #bouton-ajouter-photo {
-  height: 36px;
-  width: 173px;
-  padding-top: 15px;
-  border: none;
-  border-radius: 50px;
-  background: #cbd6dc;
-  font-family: Work Sans;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #cbd6dc;
+  color: #ffffff;
+  border-radius: 60px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#bouton-ajouter-photo input {
+  display: none;
+}
+
+#section-ajout p {
+  font-size: 12px;
+  color: #a7a7a7;
+}
+
+.champs-formulaire {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.label-champs {
+  width: 100%;
+}
+
+.label-formulaire {
+  font-family: "Work Sans", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: rgba(48, 102, 133, 1);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.bouton-validation {
+  width: auto;
+  padding: 10px 20px;
+  background-color: #1d6154;
+  background-color: ;
+  color: #fff;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  margin: 20px auto 0 auto;
+  display: block;
+  font-size: 16px;
   text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.formulaire-ajout {
-  width: 440px;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
+/* Lorsqu'une image est sélectionnée, le bouton "Valider" devient vert */
+.bouton-validation.active {
+  background-color: green;
+  color: white;
 }
 
-#valider-modale2 {
-  display: flex;
-  justify-self: center;
-  align-self: center;
-  background-color: #a7a7a7;
-  height: 36px;
-  width: 237px;
-}
 /* Menu catégories */
 .menu-categories {
   display: flex;
@@ -540,7 +499,7 @@ li:hover {
   min-width: 100px;
   height: 37px;
   margin: 5px;
-  padding: 9px 14px 9px 14px;
+  padding: 9px 14px;
   border: 1px solid #1d6154;
   border-radius: 60px;
   background-color: #fff;
@@ -549,6 +508,7 @@ li:hover {
   font-weight: 700;
   font-size: 16px;
   text-align: center;
+  cursor: pointer;
 }
 
 .boutonsFiltres:hover,
@@ -571,17 +531,24 @@ li:hover {
   max-width: 300px;
 }
 
+.gallery figure {
+  margin: 0;
+}
+
 /* Section contact */
 #contact {
   width: 50%;
   margin: auto;
 }
+
 #contact > * {
   text-align: center;
 }
+
 #contact h2 {
   margin-bottom: 20px;
 }
+
 #contact form {
   text-align: left;
   margin-top: 30px;
@@ -589,24 +556,22 @@ li:hover {
   flex-direction: column;
 }
 
-#contact input {
-  height: 50px;
+#contact input,
+#contact textarea {
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 #contact label {
-  margin: 2em 0 1em 0;
-}
-
-#contact textarea {
-  border: none;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  margin: 1em 0 0.5em 0;
 }
 
 input[type="submit"] {
-  font-family: "Syne";
+  font-family: "Syne", sans-serif;
   font-weight: 700;
   color: white;
   background-color: #1d6154;
@@ -614,6 +579,11 @@ input[type="submit"] {
   width: 180px;
   text-align: center;
   border-radius: 60px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #145a44;
 }
 
 /* Footer */
@@ -622,10 +592,13 @@ footer nav ul {
   justify-content: flex-end;
   margin: 2em;
 }
-
+body.edit-mode {
+  margin-top: 80px;
+}
 /* Barre noire "Mode édition" */
 .black-bar {
-  width: 100%;
+  position: fixed;
+  width: 100vw;
   height: 59px;
   background-color: black;
   color: white;
@@ -634,7 +607,11 @@ footer nav ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+
+  margin-bottom: 20;
+  top: 0;
+  left: 0;
+  padding: 0;
 }
 
 .black-bar i {
@@ -644,10 +621,53 @@ footer nav ul {
 }
 
 /* Login */
-.forgotPassword {
-  text-align: center;
+.login-body {
+  font-family: "Work Sans", sans-serif;
 }
 
-.forgotpassword a {
+#loginform {
+  width: 300px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#loginform label {
+  margin-top: 20px;
+}
+
+#loginform input[type="email"],
+#loginform input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#loginform input[type="submit"] {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #1d6154;
+  color: #fff;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+}
+
+.forgotPassword {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgotPassword a {
   color: #3d3d3d;
+  text-decoration: none;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline;
+}
+
+/* Classes utilitaires */
+.hidden {
+  display: none;
 }

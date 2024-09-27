@@ -3,6 +3,21 @@ const overlay = document.querySelector(".modales");
 const modale1 = document.getElementById("modale1");
 const modale2 = document.getElementById("modale2");
 
+// Sélection des boutons nécessaires
+const boutonRetour = document.getElementById("retour");
+const boutonFermerModale1 = document.getElementById("fermer-modale1");
+const boutonFermerModale2 = document.getElementById("fermer-modale2");
+const boutonAjouterPhotoGallery = document.getElementById(
+  "bouton-ajouter-photo-gallery"
+);
+const boutonAjouterPhotoModale1 = document.getElementById("validation");
+const validerBtn = document.getElementById("valider-modale2");
+const inputImage = document.getElementById("selectionner");
+const imagePreview = document.getElementById("image-prev");
+const iconeImage = document.getElementById("icone-image");
+const boutonAjouterPhoto = document.getElementById("bouton-ajouter-photo");
+const infoFormats = document.querySelector("#section-ajout p");
+
 // Fonction pour afficher la modale 1 (Galerie photo)
 function ouvrirModale1() {
   modale1.style.display = "block";
@@ -36,7 +51,6 @@ function fermerModale2() {
 }
 
 // Gestion du bouton "Retour" dans la modale 2
-const boutonRetour = document.getElementById("retour");
 boutonRetour.addEventListener("click", (e) => {
   e.preventDefault();
   fermerModale2();
@@ -46,46 +60,51 @@ boutonRetour.addEventListener("click", (e) => {
 // Gestion de l'ouverture de la modale au clic sur "Modifier"
 function modificationProjets() {
   const modifierProjets = document.querySelector(".link-modifier");
-  modifierProjets.addEventListener("click", (e) => {
-    e.preventDefault();
-    ouvrirModale1();
-  });
+  if (modifierProjets) {
+    modifierProjets.addEventListener("click", (e) => {
+      e.preventDefault();
+      ouvrirModale1();
+    });
+  }
 }
 
-// Gestion de la fermeture de la modale au clic sur la croix
-function boutonFermerModale1() {
-  const boutonFermer = document.getElementById("fermer-modale1");
-  boutonFermer.addEventListener("click", (e) => {
+// Gestion de la fermeture de la modale au clic sur la croix de modale1
+if (boutonFermerModale1) {
+  boutonFermerModale1.addEventListener("click", (e) => {
     e.preventDefault();
     fermerModale1();
   });
 }
 
 // Gestion de la fermeture de la modale au clic sur la croix de modale2
-function boutonFermerModale2() {
-  const boutonFermer = document.getElementById("fermer-modale2");
-  boutonFermer.addEventListener("click", (e) => {
+if (boutonFermerModale2) {
+  boutonFermerModale2.addEventListener("click", (e) => {
     e.preventDefault();
     fermerModale2();
+    resetPrevisualisation(); // Réinitialiser la modale après fermeture
   });
 }
 
 // Fermeture de la modale en cliquant en dehors (overlay)
-overlay.addEventListener("click", (event) => {
-  if (event.target === overlay) {
-    fermerModale1();
-    fermerModale2();
-  }
-});
+if (overlay) {
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      fermerModale1();
+      fermerModale2();
+      resetPrevisualisation(); // Réinitialiser la modale après fermeture
+    }
+  });
+}
 
 // Le bouton "Ajouter une photo" dans la modale 1 ouvre la modale 2
 function ajouterPhoto() {
-  const boutonAjouterPhotoModale1 = document.getElementById("validation");
-  boutonAjouterPhotoModale1.addEventListener("click", (e) => {
-    e.preventDefault();
-    fermerModale1();
-    ouvrirModale2();
-  });
+  if (boutonAjouterPhotoModale1) {
+    boutonAjouterPhotoModale1.addEventListener("click", (e) => {
+      e.preventDefault();
+      fermerModale1();
+      ouvrirModale2();
+    });
+  }
 }
 
 // Fonction pour afficher les miniatures dans la modale 1
@@ -229,6 +248,7 @@ async function envoyerNouveauProjet() {
 
     document.querySelector(".formulaire-ajout").reset();
     resetPrevisualisation();
+    validerBtn.classList.remove("active"); // Réinitialiser le bouton "Valider" à l'état gris
     fermerModale2();
   } catch (error) {
     console.error("Erreur :", error);
@@ -297,7 +317,156 @@ function ajouterProjetDOM(projet) {
   });
 }
 
-// Appel des fonctions pour gérer l'ajout de projet
+// Fonction pour prévisualiser l'image sélectionnée
+function previsualiserImage() {
+  inputImage.addEventListener("change", function () {
+    const file = inputImage.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        // Affiche l'image sélectionnée dans la zone de prévisualisation
+        imagePreview.style.backgroundImage = `url(${reader.result})`;
+        imagePreview.style.backgroundSize = "cover";
+        imagePreview.style.backgroundPosition = "center";
+        imagePreview.style.height = "169px";
+
+        // Masque les éléments inutiles après sélection
+        iconeImage.style.display = "none";
+        boutonAjouterPhoto.style.display = "none";
+        infoFormats.style.display = "none";
+      });
+
+      reader.readAsDataURL(file);
+    } else {
+      // Si aucun fichier n'est sélectionné, réinitialiser le bouton "Valider"
+      if (validerBtn) {
+        validerBtn.classList.remove("active");
+      }
+    }
+  });
+}
+
+// Fonction pour réinitialiser la prévisualisation de l'image
+function resetPrevisualisation() {
+  const imagePreview = document.getElementById("image-prev");
+  const iconeImage = document.getElementById("icone-image");
+  const boutonAjouterPhoto = document.getElementById("bouton-ajouter-photo");
+  const infoFormats = document.querySelector("#section-ajout p");
+
+  // Réinitialiser l'image de prévisualisation
+  imagePreview.style.backgroundImage = "";
+  imagePreview.style.height = "auto";
+
+  // Réafficher les éléments
+  iconeImage.style.display = "block";
+  boutonAjouterPhoto.style.display = "block";
+  infoFormats.style.display = "block";
+
+  // Réinitialiser le bouton "Valider" à l'état gris
+  if (validerBtn) {
+    validerBtn.classList.remove("active");
+  }
+}
+
+// Sélection du formulaire
+const formulaireAjout = document.querySelector(".formulaire-ajout");
+
+// Ajout d'un écouteur d'événements pour la soumission du formulaire
+if (formulaireAjout) {
+  formulaireAjout.addEventListener("submit", function (e) {
+    e.preventDefault(); // Empêche le comportement par défaut du formulaire
+    envoyerNouveauProjet(); // Appelle la fonction pour envoyer le nouveau projet
+  });
+}
+
+// Fonction pour afficher ou masquer le lien "Modifier" en fonction du mode édition
+function afficherLienModifier() {
+  const lienModifier = document.querySelector(".link-modifier");
+
+  if (!lienModifier) {
+    console.warn("L'élément .link-modifier n'a pas été trouvé dans le DOM.");
+    return; // Si l'élément n'existe pas, arrêter l'exécution
+  }
+
+  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
+
+  if (authToken) {
+    lienModifier.style.display = "inline-flex"; // Affiche le lien si l'utilisateur est connecté
+  } else {
+    lienModifier.style.display = "none"; // Masque le lien si l'utilisateur n'est pas connecté
+  }
+}
+
+// Fonction pour afficher la barre noire de mode édition uniquement si l'utilisateur est connecté
+function afficherBlackBar() {
+  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
+
+  if (authToken) {
+    // Si l'utilisateur est connecté, afficher la barre noire
+    const blackBar = document.createElement("div");
+    blackBar.classList.add("black-bar");
+
+    // Créer l'icône
+    const icon = document.createElement("i");
+    icon.classList.add("fa-solid", "fa-pen-to-square");
+    icon.style.marginRight = "10px"; // Ajouter un espacement entre l'icône et le texte
+
+    // Ajouter l'icône et le texte à la barre
+    blackBar.appendChild(icon);
+    blackBar.appendChild(document.createTextNode("Mode édition"));
+
+    // Ajouter la barre noire en haut du body
+    document.body.prepend(blackBar);
+
+    // Ajouter la classe 'edit-mode' pour ajouter une marge en haut du body
+    document.body.classList.add("edit-mode");
+  }
+}
+
+// Fonction pour mettre à jour le bouton "Login" ou "Logout" en fonction de l'état de connexion
+function updateLoginLogoutButton() {
+  const authToken = localStorage.getItem("authToken");
+  const loginLink = document.querySelector('nav a[href="login.html"]');
+
+  // Appliquer la classe appropriée pour le style des boutons
+  if (loginLink) {
+    loginLink.classList.add("nav-button");
+  }
+
+  if (authToken) {
+    // Si l'utilisateur est connecté, afficher "Logout"
+    loginLink.innerText = "Logout";
+
+    // Afficher la black bar de mode édition et le lien "Modifier"
+    afficherBlackBar();
+    afficherLienModifier();
+
+    // Gestion de la déconnexion
+    loginLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Supprimer le token du localStorage pour déconnecter l'utilisateur
+      localStorage.removeItem("authToken");
+      // Supprimer la classe 'edit-mode' du body
+      document.body.classList.remove("edit-mode");
+      // Rediriger vers la page de login après déconnexion
+      window.location.href = "index.html";
+    });
+  } else {
+    // Si l'utilisateur n'est pas connecté, afficher "Login"
+    loginLink.innerText = "Login";
+    afficherLienModifier(); // Masquer le lien "Modifier"
+  }
+}
+
+// Appel des fonctions pour gérer les interactions
 affichageDesMiniature();
 modificationProjets();
 ajouterPhoto();
+previsualiserImage();
+
+// Appel de la fonction de mise à jour au chargement de la page principale
+window.addEventListener("load", function () {
+  updateLoginLogoutButton();
+});
