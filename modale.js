@@ -336,14 +336,19 @@ function previsualiserImage() {
         iconeImage.style.display = "none";
         boutonAjouterPhoto.style.display = "none";
         infoFormats.style.display = "none";
+
+        // Active le bouton "Valider" et change sa couleur en vert
+        validerBtn.classList.add("active");
+        validerBtn.classList.remove("inactive");
+        validerBtn.disabled = false; // Rendre le bouton cliquable
       });
 
       reader.readAsDataURL(file);
     } else {
-      // Si aucun fichier n'est sélectionné, réinitialiser le bouton "Valider"
-      if (validerBtn) {
-        validerBtn.classList.remove("active");
-      }
+      // Si aucun fichier n'est sélectionné, désactiver le bouton "Valider"
+      validerBtn.classList.remove("active");
+      validerBtn.classList.add("inactive");
+      validerBtn.disabled = true; // Désactiver le bouton
     }
   });
 }
@@ -469,4 +474,6 @@ previsualiserImage();
 // Appel de la fonction de mise à jour au chargement de la page principale
 window.addEventListener("load", function () {
   updateLoginLogoutButton();
+  validerBtn.classList.add("inactive");
+  validerBtn.disabled = true; // Rendre le bouton non cliquable
 });

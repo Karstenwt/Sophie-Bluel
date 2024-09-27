@@ -105,31 +105,33 @@
 
             <p>jpg, png: 4mo max</p>
           </div>
-          <div class="label-champs">
-            <label for="titre" class="label-formulaire">titre</label>
-            <input
-              id="titre"
-              type="text"
-              name="titre"
-              class="champs-formulaire"
-              required
-            />
-          </div>
-          <div class="label-champs">
-            <label for="categorie" id="champs-titre" class="label-formulaire"
-              ><b>Categorie</b></label
-            >
-            <select
-              name="categorie"
-              id="liste-categories"
-              class="champs-formulaire"
-              required
-            >
-              <option value="Champs-selection"></option>
-              <option value="1">Objets</option>
-              <option value="2">Appartements</option>
-              <option value="3">Hotel & Restaurants</option>
-            </select>
+          <div id="titre-categorie">
+            <div class="label-champs">
+              <label for="titre" class="label-formulaire">Titre</label>
+              <input
+                id="titre"
+                type="text"
+                name="titre"
+                class="champs-formulaire titre-champ"
+                required
+              />
+            </div>
+            <div class="label-champs">
+              <label for="categorie" id="champs-titre" class="label-formulaire"
+                ><b>Categorie</b></label
+              >
+              <select
+                name="categorie"
+                id="liste-categories"
+                class="champs-formulaire categorie-champ"
+                required
+              >
+                <option value="Champs-selection"></option>
+                <option value="1">Objets</option>
+                <option value="2">Appartements</option>
+                <option value="3">Hotel & Restaurants</option>
+              </select>
+            </div>
           </div>
 
           <input
@@ -138,6 +140,7 @@
             id="valider-modale2"
             class="bouton-validation"
             value="valider"
+            div class="trait-sous-bouton"></div>
           />
         </form>
       </div>
