@@ -142,7 +142,7 @@ function affichageDesMiniature() {
           image.classList.add("image-miniature");
 
           const editer = document.createElement("a");
-          editer.innerText = "éditer";
+
           editer.classList.add("editer");
 
           icones.appendChild(boutonDeplacer);
@@ -372,6 +372,8 @@ function resetPrevisualisation() {
   // Réinitialiser le bouton "Valider" à l'état gris
   if (validerBtn) {
     validerBtn.classList.remove("active");
+    validerBtn.classList.add("inactive");
+    validerBtn.disabled = true; // Désactiver le bouton
   }
 }
 
@@ -381,7 +383,7 @@ const formulaireAjout = document.querySelector(".formulaire-ajout");
 // Ajout d'un écouteur d'événements pour la soumission du formulaire
 if (formulaireAjout) {
   formulaireAjout.addEventListener("submit", function (e) {
-    e.preventDefault(); // Empêche le comportement par défaut du formulaire
+    e.preventDefault();
     envoyerNouveauProjet(); // Appelle la fonction pour envoyer le nouveau projet
   });
 }
@@ -398,16 +400,15 @@ function afficherLienModifier() {
   const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
 
   if (authToken) {
-    lienModifier.style.display = "inline-flex"; // Affiche le lien si l'utilisateur est connecté
+    lienModifier.style.display = "inline-flex";
   } else {
-    lienModifier.style.display = "none"; // Masque le lien si l'utilisateur n'est pas connecté
+    lienModifier.style.display = "none";
   }
 }
 
 // Fonction pour afficher la barre noire de mode édition uniquement si l'utilisateur est connecté
 function afficherBlackBar() {
-  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
-
+  const authToken = localStorage.getItem("authToken");
   if (authToken) {
     // Si l'utilisateur est connecté, afficher la barre noire
     const blackBar = document.createElement("div");

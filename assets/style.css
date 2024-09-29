@@ -261,6 +261,7 @@ nav li:hover {
   color: #b1663c;
 }
 
+
 /* Modales */
 
 /* Overlay */
@@ -458,7 +459,6 @@ nav li:hover {
   box-shadow: 0 0 14px rgba(0, 0, 0, 0.2);
 }
 
-/* S'assurer que l'effet de largeur ne touche que les inputs et selects spécifiques*/
 .label-champs input,
 .label-champs select {
   width: 420px;
@@ -466,13 +466,16 @@ nav li:hover {
   box-sizing: border-box;
   display: block;
 }
-
+.separator {
+  border-bottom: solid 1px #b3b3b3;
+  margin: 20px 0;
+  width: 100%; /}
 /* Bouton validation de la modale */
 .bouton-validation {
   width: auto;
   padding: 10px 20px;
   background-color: #1d6154;
-  background-color: ;
+  
   color: #fff;
   border: none;
   border-radius: 60px;
@@ -484,11 +487,25 @@ nav li:hover {
   transition: background-color 0.3s ease;
 }
 
-/* Lorsqu'une image est sélectionnée, le bouton "Valider" devient vert */
 .bouton-validation.active {
-  background-color: green;
+  background-color:#1d6154;
+  ; 
   color: white;
 }
+
+.bouton-validation.inactive {
+  background-color: grey ; 
+  color: lightgrey;
+  cursor: not-allowed; 
+}
+
+.bouton-validation.inactive:hover {
+  background-color: inherit !important;
+  color: inherit!important;
+ 
+}
+
+
 
 /* Menu catégories */
 .menu-categories {
@@ -498,6 +515,7 @@ nav li:hover {
   flex-wrap: wrap;
   margin-top: 20px;
 }
+
 
 .boutonsFiltres,
 .boutonTous {
