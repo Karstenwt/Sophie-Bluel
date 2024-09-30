@@ -374,7 +374,11 @@ nav li:hover {
   color: #ffffff;
   background-color: #000000;
   padding: 5px;
-  border-radius: 50%;
+  margin-top: 30px;
+  margin-left: 10px;
+ 
+  border-radius:5px ;
+  ;
 }
 
 #bouton-deplacer i {
@@ -398,9 +402,9 @@ nav li:hover {
   margin-bottom: 20px;
 }
 #section-ajout {
-  width: 100%;
+  width: 420px;
   height: 169px;
-  min-width: 420px;
+ margin-top: 20px;
   padding: 10px;
   border-radius: 3px;
   background-color: #e8f1f6;
@@ -411,6 +415,7 @@ nav li:hover {
 
 #image-prev {
   width: 100%;
+  width: 420px;
   height: 169px;
   background-color: #e8f1f6;
   display: flex;
@@ -447,11 +452,16 @@ nav li:hover {
   font-size: 12px;
   color: #a7a7a7;
 }
-
+.label-champs {
+  margin-top: 10px;
+}
 /* Champs "Titre" et "Catégorie"*/
 .titre-champ,
 .categorie-champ {
-  width: 500px;
+  margin-top:20px;
+  
+
+  width: 50px;
   padding: 8px;
   box-sizing: border-box;
   margin-bottom: 15px;
@@ -461,8 +471,8 @@ nav li:hover {
 
 .label-champs input,
 .label-champs select {
-  width: 420px;
-  padding: 8px;
+  width: 440px;
+  padding: 5px;
   box-sizing: border-box;
   display: block;
 }
