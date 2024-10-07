@@ -18,7 +18,7 @@ function genererMenuCategories(works) {
   boutonTous.innerText = "Tous";
   boutonTous.classList.add("boutonTous"); //css pour le bouton
   boutonTous.addEventListener("click", () => afficherGalerie(works));
-  menuCategoriesElement.appendChild(boutonTous);
+  menuCategoriesElement.appendChild(boutonTous); // Ajoute le bouton "Tous"
 
   // Créer les boutons pour chaque catégorie unique
   categoriesSet.forEach((categorie) => {
@@ -29,7 +29,7 @@ function genererMenuCategories(works) {
       const travauxFiltres = works.filter(
         (work) => work.category.name === categorie
       );
-      afficherGalerie(travauxFiltres);
+      afficherGalerie(travauxFiltres); // Filtre et affiche les projets de la catégorie sélectionnée
     });
 
     menuCategoriesElement.appendChild(boutonCategorie);
