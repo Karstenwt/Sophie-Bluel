@@ -141,13 +141,6 @@ function affichageDesMiniature() {
           image.src = elements.imageUrl;
           image.classList.add("image-miniature");
 
-          // Supprimé le lien "éditer" ici
-          /*
-          const editer = document.createElement("a");
-          editer.innerText = "éditer";
-          editer.classList.add("editer");
-          */
-
           icones.appendChild(boutonDeplacer);
           boutonDeplacer.appendChild(iconeDeplacer);
           icones.appendChild(boutonSupprimer);

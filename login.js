@@ -60,7 +60,6 @@ function updateLoginLogoutButton() {
     // Si l'utilisateur est connecté, afficher "Logout"
     loginLink.innerText = "Logout";
 
-    // Afficher la black bar de mode édition et le lien "Modifier"
     afficherBlackBar();
     afficherLienModifier();
 

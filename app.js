@@ -8,7 +8,7 @@ window.onload = async function () {
     console.log("Données récupérées de l'API:", works);
     afficherGalerie(works);
     genererMenuCategories(works);
-    cacherBoutonsSiConnecte(); // Appel de la fonction pour cacher les boutons
+    cacherBoutonsSiConnecte();
   } catch (error) {
     console.error("Erreur lors de la récupération des travaux :", error);
   }
