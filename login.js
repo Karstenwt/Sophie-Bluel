@@ -24,7 +24,6 @@ function afficherLienModifier() {
   }
 }
 
-// Fonction pour afficher la barre noire de mode édition uniquement si l'utilisateur est connecté
 function afficherBlackBar() {
   const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
 

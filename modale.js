@@ -141,9 +141,12 @@ function affichageDesMiniature() {
           image.src = elements.imageUrl;
           image.classList.add("image-miniature");
 
+          // Supprimé le lien "éditer" ici
+          /*
           const editer = document.createElement("a");
-
+          editer.innerText = "éditer";
           editer.classList.add("editer");
+          */
 
           icones.appendChild(boutonDeplacer);
           boutonDeplacer.appendChild(iconeDeplacer);
@@ -151,7 +154,7 @@ function affichageDesMiniature() {
           boutonSupprimer.appendChild(iconeEffacer);
           ficheMiniature.appendChild(icones);
           ficheMiniature.appendChild(image);
-          ficheMiniature.appendChild(editer);
+          // ficheMiniature.appendChild(editer); // Suppression du lien éditer
           miniatures.appendChild(ficheMiniature);
         }
       });
@@ -298,9 +301,12 @@ function ajouterProjetDOM(projet) {
   image.src = projet.imageUrl;
   image.classList.add("image-miniature");
 
+  // Suppression du lien "éditer"
+  /*
   const editer = document.createElement("a");
   editer.innerText = "éditer";
   editer.classList.add("editer");
+  */
 
   icones.appendChild(boutonDeplacer);
   boutonDeplacer.appendChild(iconeDeplacer);
@@ -308,7 +314,7 @@ function ajouterProjetDOM(projet) {
   boutonSupprimer.appendChild(iconeEffacer);
   ficheMiniature.appendChild(icones);
   ficheMiniature.appendChild(image);
-  ficheMiniature.appendChild(editer);
+  // ficheMiniature.appendChild(editer); // Suppression du lien éditer
   miniatures.appendChild(ficheMiniature);
 
   boutonSupprimer.addEventListener("click", (e) => {

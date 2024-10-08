@@ -35,3 +35,16 @@ function afficherGalerie(works) {
     galerieElement.appendChild(figure);
   });
 }
+
+// Fonction pour cacher les boutons "Tous", "Objets", "Appartements", et "Hôtel & Restaurants" si l'utilisateur est connecté
+function cacherBoutonsSiConnecte() {
+  const authToken = localStorage.getItem("authToken");
+  if (authToken) {
+    const boutonsCategories = document.querySelectorAll(
+      ".menu-categories button"
+    );
+    boutonsCategories.forEach((bouton) => {
+      bouton.style.display = "none";
+    });
+  }
+}
