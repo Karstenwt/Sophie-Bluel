@@ -147,7 +147,7 @@ function affichageDesMiniature() {
           boutonSupprimer.appendChild(iconeEffacer);
           ficheMiniature.appendChild(icones);
           ficheMiniature.appendChild(image);
-          // ficheMiniature.appendChild(editer); // Suppression du lien éditer
+
           miniatures.appendChild(ficheMiniature);
         }
       });
@@ -294,20 +294,12 @@ function ajouterProjetDOM(projet) {
   image.src = projet.imageUrl;
   image.classList.add("image-miniature");
 
-  // Suppression du lien "éditer"
-  /*
-  const editer = document.createElement("a");
-  editer.innerText = "éditer";
-  editer.classList.add("editer");
-  */
-
   icones.appendChild(boutonDeplacer);
   boutonDeplacer.appendChild(iconeDeplacer);
   icones.appendChild(boutonSupprimer);
   boutonSupprimer.appendChild(iconeEffacer);
   ficheMiniature.appendChild(icones);
   ficheMiniature.appendChild(image);
-  // ficheMiniature.appendChild(editer); // Suppression du lien éditer
   miniatures.appendChild(ficheMiniature);
 
   boutonSupprimer.addEventListener("click", (e) => {
@@ -387,24 +379,6 @@ if (formulaireAjout) {
   });
 }
 
-// Fonction pour afficher ou masquer le lien "Modifier" en fonction du mode édition
-function afficherLienModifier() {
-  const lienModifier = document.querySelector(".link-modifier");
-
-  if (!lienModifier) {
-    console.warn("L'élément .link-modifier n'a pas été trouvé dans le DOM.");
-    return; // Si l'élément n'existe pas, arrêter l'exécution
-  }
-
-  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
-
-  if (authToken) {
-    lienModifier.style.display = "inline-flex";
-  } else {
-    lienModifier.style.display = "none";
-  }
-}
-
 // Fonction pour afficher la barre noire de mode édition uniquement si l'utilisateur est connecté
 function afficherBlackBar() {
   const authToken = localStorage.getItem("authToken");
@@ -430,48 +404,11 @@ function afficherBlackBar() {
   }
 }
 
-// Fonction pour mettre à jour le bouton "Login" ou "Logout" en fonction de l'état de connexion
-function updateLoginLogoutButton() {
-  const authToken = localStorage.getItem("authToken");
-  const loginLink = document.querySelector('nav a[href="login.html"]');
-
-  // Appliquer la classe appropriée pour le style des boutons
-  if (loginLink) {
-    loginLink.classList.add("nav-button");
-  }
-
-  if (authToken) {
-    // Si l'utilisateur est connecté, afficher "Logout"
-    loginLink.innerText = "Logout";
-
-    // Afficher la black bar de mode édition et le lien "Modifier"
-    afficherBlackBar();
-    afficherLienModifier();
-
-    // Gestion de la déconnexion
-    loginLink.addEventListener("click", function (e) {
-      e.preventDefault();
-      // Supprimer le token du localStorage pour déconnecter l'utilisateur
-      localStorage.removeItem("authToken");
-      // Supprimer la classe 'edit-mode' du body
-      document.body.classList.remove("edit-mode");
-      // Rediriger vers la page de login après déconnexion
-      window.location.href = "index.html";
-    });
-  } else {
-    // Si l'utilisateur n'est pas connecté, afficher "Login"
-    loginLink.innerText = "Login";
-    afficherLienModifier(); // Masquer le lien "Modifier"
-  }
-}
-
-// Appel des fonctions pour gérer les interactions
 affichageDesMiniature();
 modificationProjets();
 ajouterPhoto();
 previsualiserImage();
 
-// Appel de la fonction de mise à jour au chargement de la page principale
 window.addEventListener("load", function () {
   updateLoginLogoutButton();
   validerBtn.classList.add("inactive");

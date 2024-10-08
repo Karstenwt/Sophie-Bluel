@@ -18,31 +18,9 @@ function afficherLienModifier() {
   const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
 
   if (authToken) {
-    lienModifier.style.display = "inline-flex"; // Affiche le lien si l'utilisateur est connecté
+    lienModifier.style.display = "inline-flex";
   } else {
     lienModifier.style.display = "none"; // Masque le lien si l'utilisateur n'est pas connecté
-  }
-}
-
-function afficherBlackBar() {
-  const authToken = localStorage.getItem("authToken"); // Vérifier si l'utilisateur est connecté
-
-  if (authToken) {
-    // Si l'utilisateur est connecté, afficher la barre noire
-    const blackBar = document.createElement("div");
-    blackBar.classList.add("black-bar");
-
-    // Créer l'icône
-    const icon = document.createElement("i");
-    icon.classList.add("fa-solid", "fa-pen-to-square");
-    icon.style.marginRight = "10px"; // Ajouter un espacement entre l'icône et le texte
-
-    // Ajouter l'icône et le texte à la barre
-    blackBar.appendChild(icon);
-    blackBar.appendChild(document.createTextNode("Mode édition"));
-
-    // Ajouter la barre noire en haut du body
-    document.body.prepend(blackBar);
   }
 }
 
@@ -124,7 +102,7 @@ if (loginForm) {
   });
 }
 
-// Appel de la fonction de mise à jour au chargement de la page principale
+//
 window.addEventListener("load", function () {
   updateLoginLogoutButton();
 });
